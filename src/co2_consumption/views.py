@@ -5,7 +5,7 @@ import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 from django.apps import apps
-from statistics import median
+from statistics import median, mean
 from django.db.models import Q
 from collections import OrderedDict
 
@@ -52,6 +52,8 @@ class IndexView(TemplateView):
                 'median_season_'+model.lower()
             ] = self.make_season_stats(model, years)
 
+            context['weekdays_mean_'+model.lower()],context['weekend_mean_'+model.lower()] = self.make_weekdays_stats(model)
+
         return context
 
     def make_season_stats(self, model_name, years):
@@ -79,3 +81,23 @@ class IndexView(TemplateView):
             )
 
         return median_by_season
+
+    def make_weekdays_stats(self, model_name):
+        """
+            Method used to calculate stats on days for models Consumption and ConsumptionInterpolate
+        """
+        model = apps.get_model(
+            app_label='co2_consumption',
+            model_name=model_name
+        )
+
+        weekdays_values = []
+        weekend_values = []
+
+        for instance in model.objects.all():
+            if instance.datetime.weekday() < 5:
+                weekdays_values.append(instance.co2_rate)
+            else:
+                weekend_values.append(instance.co2_rate)
+
+        return mean(weekdays_values), mean(weekend_values)

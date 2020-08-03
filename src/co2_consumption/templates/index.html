@@ -12,4 +12,16 @@
     {% for mykey,myvalue in median_season_consumptioninterpolate.items %}
         {{ mykey }} : {{ myvalue }} </br>
     {% endfor %}
+
+    <p> - Mean for original consumption (weekdays)</p>
+    {{weekdays_mean_consumption}}
+
+    <p> - Mean for original consumption (weekdays)</p>
+    {{weekdays_mean_consumptioninterpolate}}
+
+    <p> - Mean for original consumption (weekend)</p>
+    {{weekend_mean_consumption}}
+
+    <p> - Mean for original consumption (weekend)</p>
+    {{weekend_mean_consumptioninterpolate}}
 </div>
