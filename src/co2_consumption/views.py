@@ -8,6 +8,7 @@ from django.apps import apps
 from statistics import median, mean
 from django.db.models import Q
 from collections import OrderedDict
+import os
 
 
 class IndexView(TemplateView):
@@ -53,6 +54,8 @@ class IndexView(TemplateView):
             ] = self.make_season_stats(model, years)
 
             context['weekdays_mean_'+model.lower()],context['weekend_mean_'+model.lower()] = self.make_weekdays_stats(model)
+
+        context['total_consommation'] = self.read_consommation_in_csv()
 
         return context
 
@@ -101,3 +104,14 @@ class IndexView(TemplateView):
                 weekend_values.append(instance.co2_rate)
 
         return mean(weekdays_values), mean(weekend_values)
+
+    def read_consommation_in_csv(self):
+        """
+            Method used to calculate the sum of the column 'Consommation (MW)'
+        """
+        return pd.read_csv(
+            os.path.join(
+                os.path.dirname(__file__), 'data/eco2mix-national-cons-def.csv'
+            ),
+            sep=";"
+        )['Consommation (MW)'].sum()
