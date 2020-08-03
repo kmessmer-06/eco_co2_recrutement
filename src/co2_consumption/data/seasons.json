@@ -1,0 +1,82 @@
+[
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "winter",
+            "start_date": "2016-12-21T00:00:00",
+            "end_date": "2017-03-20T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "spring",
+            "start_date": "2017-03-20T00:00:00",
+            "end_date": "2017-06-21T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "summer",
+            "start_date": "2017-06-21T00:00:00",
+            "end_date": "2017-09-22T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "autumn",
+            "start_date": "2017-09-22T00:00:00",
+            "end_date": "2017-12-21T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "winter",
+            "start_date": "2017-12-21T00:00:00",
+            "end_date": "2018-03-20T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "spring",
+            "start_date": "2018-03-20T00:00:00",
+            "end_date": "2018-06-21T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "summer",
+            "start_date": "2018-06-21T00:00:00",
+            "end_date": "2018-09-23T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "autumn",
+            "start_date": "2018-09-23T00:00:00",
+            "end_date": "2018-12-21T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "winter",
+            "start_date": "2018-12-21T00:00:00",
+            "end_date": "2019-03-20T00:00:00"
+        }
+    },
+    {
+        "model": "co2_consumption.season",
+        "fields": {
+            "name": "spring",
+            "start_date": "2019-03-20T00:00:00",
+            "end_date": "2019-06-21T00:00:00"
+        }
+    }
+]

@@ -1,8 +1,13 @@
 from django.views.generic import TemplateView
-from src.co2_consumption.models import ConsumptionInterpolate, Consumption
+from src.co2_consumption.models import (ConsumptionInterpolate, Consumption,
+                                        Season)
 import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+from django.apps import apps
+from statistics import median
+from django.db.models import Q
+from collections import OrderedDict
 
 
 class IndexView(TemplateView):
@@ -13,6 +18,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+        years = [2017, 2018]
 
         df_original = pd.DataFrame(
             Consumption.objects.all().order_by('datetime').values()
@@ -40,4 +46,36 @@ class IndexView(TemplateView):
             output_type='div'
         )
 
+        for model in ('Consumption', 'ConsumptionInterpolate'):
+
+            context[
+                'median_season_'+model.lower()
+            ] = self.make_season_stats(model, years)
+
         return context
+
+    def make_season_stats(self, model_name, years):
+        """
+            Method used to calculate stats on season for models Consumption and ConsumptionInterpolate
+        """
+        model = apps.get_model(
+            app_label='co2_consumption',
+            model_name=model_name
+        )
+
+        seasons = [season for season in Season.objects.filter(
+            Q(start_date__year__in=years) | Q(end_date__year__in=years)
+        )]
+
+        median_by_season = OrderedDict()
+
+        for season in seasons:
+            season_name = "{} {}".format(season.name, season.start_date.year)
+            median_by_season[season_name] = median(
+                model.objects.filter(
+                    datetime__lte=season.end_date,
+                    datetime__gte=season.start_date
+                ).values_list('co2_rate', flat=True)
+            )
+
+        return median_by_season

@@ -1,3 +1,15 @@
 <div>
     {{ graph_diff|safe }}
 </div>
+
+<div>
+    <p> - Median for original consumption</p>
+    {% for mykey,myvalue in median_season_consumption.items %}
+        {{ mykey }} : {{ myvalue }} </br>
+    {% endfor %}
+
+    <p> - Median for original consumption interpolate</p>
+    {% for mykey,myvalue in median_season_consumptioninterpolate.items %}
+        {{ mykey }} : {{ myvalue }} </br>
+    {% endfor %}
+</div>
